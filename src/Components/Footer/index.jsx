@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 const Container = styled.footer`
   padding: 0;
-  margin: 0.8em 0;
+  margin: 0.5em 0;
   display: flex;
   justify-content: center;
 
@@ -25,7 +26,13 @@ const Body = styled.p`
   }
 `;
 
-const Link = styled.button`
+const Link = styled(motion.button).attrs((props) => ({
+  whileHover: {
+    borderBottom: `2px solid ${props.theme.colors.primary}`,
+    cursor: "pointer",
+    transition: { type: "spring" },
+  },
+}))`
   padding: 0;
   padding-bottom: 0.2em;
   margin: 0 0.4rem;
@@ -34,13 +41,6 @@ const Link = styled.button`
   border: none;
   border-bottom: 2px solid transparent;
   color: ${({ theme }) => theme.colors.primary};
-  transition: 200ms ease-in;
-
-  &:hover {
-    border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
-    cursor: pointer;
-    transition: 200ms ease-in;
-  }
 `;
 
 const Footer = () => {
@@ -50,7 +50,8 @@ const Footer = () => {
     <Container>
       <Body>
         Developed using 🞄
-        <Link onClick={() => goToLink("https://reactjs.org/")}>React</Link>🞄
+        <Link onClick={() => goToLink("https://reactjs.org/")}>React</Link>
+        🞄
         <Link onClick={() => goToLink("https://styled-components.com/")}>
           Styled Components
         </Link>

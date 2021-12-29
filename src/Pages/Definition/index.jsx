@@ -9,8 +9,9 @@ import {
 } from "../../Components";
 import { fetchEntry } from "../../Adapters";
 import { useParams } from "react-router";
+import { motion, AnimatePresence } from "framer-motion";
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   padding: 1.5rem;
   margin: 0;
 
@@ -37,12 +38,12 @@ const Wrapper = styled.span`
   margin: 0;
 `;
 
-const DefWrapper = styled.div`
+const DefWrapper = styled(motion.div)`
   padding: 0;
   margin: 0;
 `;
 
-const Definition = () => {
+const Definition = ({ transVariant }) => {
   const [entry, setEntry] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -63,35 +64,34 @@ const Definition = () => {
   }, [word]);
 
   return (
-    <>
-      <Container>
-        <Grid>
-          <Wrapper>
-            <Search />
-            {entry && !loading && (
-              <WordPhonetics
-                word={word}
-                pron={entry[0].phonetics[0].text}
-                audio={entry[0].phonetics[0].audio}
-              />
-            )}
+    <Container
+      variants={transVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      <Grid>
+        <Wrapper>
+          <Search />
+          {entry && !loading && (
+            <WordPhonetics word={word} phonetics={entry[0].phonetics} />
+          )}
 
-            {!entry && !loading && <WordNotFound />}
-          </Wrapper>
+          {!entry && !loading && <WordNotFound />}
+        </Wrapper>
 
-          <Wrapper>
+        <DefWrapper>
+          <AnimatePresence>
             {loading && <Loader />}
-            {entry && !loading && (
-              <DefWrapper>
-                {entry[0].meanings.map((data, index) => (
-                  <WordInformation meanings={data} key={index} />
-                ))}
-              </DefWrapper>
-            )}
-          </Wrapper>
-        </Grid>
-      </Container>
-    </>
+            {entry &&
+              !loading &&
+              entry[0].meanings.map((data, index) => (
+                <WordInformation meanings={data} key={index} />
+              ))}
+          </AnimatePresence>
+        </DefWrapper>
+      </Grid>
+    </Container>
   );
 };
 

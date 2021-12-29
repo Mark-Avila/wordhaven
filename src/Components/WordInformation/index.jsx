@@ -1,7 +1,26 @@
 import styled from "styled-components";
 import { WordsDefsAndEx, Synonyms } from "..";
+import { motion } from "framer-motion";
 
-const Container = styled.section`
+const ContainerVariant = {
+  hidden: {
+    x: 250,
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: {
+    x: 250,
+    opacity: 0,
+  },
+};
+
+const Container = styled(motion.section)`
   padding: 2.5rem;
   margin: 0;
   margin-bottom: 1em;
@@ -35,7 +54,12 @@ const DefItem = styled.div`
 
 const WordInformation = ({ meanings }) => {
   return (
-    <Container>
+    <Container
+      variants={ContainerVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <Type>{meanings.partOfSpeech}</Type>
 
       {meanings.definitions.map((data, index) => (

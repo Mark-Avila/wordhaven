@@ -55,13 +55,16 @@ const BoxVariant = {
     ],
     transition: { repeat: Infinity, duration: 3 },
   },
+  exit: {
+    opacity: 0,
+  },
 };
 
 const Loader = () => {
   return (
     <Container>
       <Wrapper>
-        <Box animate="rotation" variants={BoxVariant} />
+        <Box animate="rotation" exit="exit" variants={BoxVariant} />
         <Text>Loading</Text>
       </Wrapper>
     </Container>

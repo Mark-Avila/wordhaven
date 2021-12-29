@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Search } from "../../Components";
+import { motion } from "framer-motion";
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   padding: 0;
   margin: 0;
 
@@ -32,10 +33,15 @@ const Brand = styled.h1`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const Landing = () => {
+const Landing = ({ transVariant }) => {
   return (
     <>
-      <Container>
+      <Container
+        variants={transVariant}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
         <Body>
           <Brand>WordHaven</Brand>
           <Search />

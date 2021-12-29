@@ -49,7 +49,9 @@ const Button = styled.button`
   }
 `;
 
-const WordPhonetics = ({ word, pron, audio }) => {
+const WordPhonetics = ({ word, phonetics }) => {
+  const { pron, audio } = phonetics;
+
   let pronAudio = new Audio(audio);
 
   const playAudio = () => {
@@ -59,14 +61,16 @@ const WordPhonetics = ({ word, pron, audio }) => {
   return (
     <Container>
       <MainWord>{word}</MainWord>
-      <Phonetics>
-        {audio && (
-          <Button onClick={playAudio}>
-            <FaVolumeUp size={25} />
-          </Button>
-        )}
-        <Pronounce>{pron}</Pronounce>
-      </Phonetics>
+      {(!pron || !audio) && (
+        <Phonetics>
+          {audio && (
+            <Button onClick={playAudio}>
+              <FaVolumeUp size={25} />
+            </Button>
+          )}
+          <Pronounce>{pron}</Pronounce>
+        </Phonetics>
+      )}
     </Container>
   );
 };

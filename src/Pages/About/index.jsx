@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import githubPic from "../../Assets/profile.jpg";
 import { FaGithub, FaFacebook } from "react-icons/fa";
-import { useNavigate } from "react-router";
+import { motion } from "framer-motion";
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   padding: 0;
   margin: 0;
   display: flex;
@@ -23,7 +23,7 @@ const Body = styled.main`
   align-items: center;
 `;
 
-const ProfileImage = styled.img`
+const ProfileImage = styled(motion.img)`
   padding: 0;
   margin: 1rem 0;
   border-radius: 50%;
@@ -59,20 +59,25 @@ const SocMedLink = styled.button`
   }
 `;
 
-const About = () => {
-  const navigate = useNavigate();
+const About = ({ transVariant }) => {
+  const goToLink = (url) => window.open(url);
 
   return (
-    <Container>
+    <Container
+      variants={transVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <Body>
         <ProfileImage src={githubPic} alt="github-profile-pic" />
         <Name>Mark Christian Avila</Name>
         <Text>Developer</Text>
         <div>
-          <SocMedLink onClick={() => navigate()}>
+          <SocMedLink onClick={() => goToLink("https://github.com/Mark-Avila")}>
             <FaGithub size={25} />
           </SocMedLink>
-          <SocMedLink>
+          <SocMedLink onClick={() => goToLink("https://github.com/Mark-Avila")}>
             <FaFacebook size={25} />
           </SocMedLink>
         </div>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Container = styled.section`
   padding: 0;
@@ -22,7 +23,7 @@ const WordWrapper = styled.section`
   flex-wrap: wrap;
 `;
 
-const Word = styled.button`
+const Word = styled(motion.button)`
   padding: 0.5em 0.8em;
   margin: 0;
   margin-right: 0.2em;
@@ -34,15 +35,6 @@ const Word = styled.button`
   font-size: 0.8em;
   border-radius: 25px;
   outline: none;
-
-  &:hover {
-    cursor: pointer;
-    filter: brightness(90%);
-  }
-
-  &:active {
-    filter: brightness(70%);
-  }
 `;
 
 const Header = styled.p`
@@ -56,6 +48,14 @@ const Header = styled.p`
   }
 `;
 
+const SynonymVariant = {
+  hover: {
+    scale: 1.1,
+    cursor: "pointer",
+    transition: { type: "spring", duration: 0.5 },
+  },
+};
+
 const Synonyms = ({ synonyms }) => {
   const navigate = useNavigate();
 
@@ -68,7 +68,12 @@ const Synonyms = ({ synonyms }) => {
       <Header>Synonyms: </Header>
       <WordWrapper>
         {synonyms.slice(0, 5).map((data, index) => (
-          <Word onClick={() => handleClick(data)} key={index}>
+          <Word
+            onClick={() => handleClick(data)}
+            key={index}
+            variants={SynonymVariant}
+            whileHover="hover"
+          >
             {data}
           </Word>
         ))}
