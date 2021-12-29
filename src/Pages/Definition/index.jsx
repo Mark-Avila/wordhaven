@@ -73,7 +73,7 @@ const Definition = ({ transVariant }) => {
       <Grid>
         <Wrapper>
           <Search />
-          {entry && !loading && (
+          {!loading && (
             <WordPhonetics word={word} phonetics={entry[0].phonetics} />
           )}
 
@@ -83,8 +83,7 @@ const Definition = ({ transVariant }) => {
         <DefWrapper>
           <AnimatePresence>
             {loading && <Loader />}
-            {entry &&
-              !loading &&
+            {!loading &&
               entry[0].meanings.map((data, index) => (
                 <WordInformation meanings={data} key={index} />
               ))}

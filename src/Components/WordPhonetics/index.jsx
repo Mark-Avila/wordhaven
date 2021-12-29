@@ -50,7 +50,10 @@ const Button = styled.button`
 `;
 
 const WordPhonetics = ({ word, phonetics }) => {
-  const { pron, audio } = phonetics;
+  let phoneticsExists = phonetics.length;
+
+  let text = phoneticsExists ? phonetics[0].text : "";
+  let audio = phoneticsExists ? phonetics[0].audio : undefined;
 
   let pronAudio = new Audio(audio);
 
@@ -61,14 +64,14 @@ const WordPhonetics = ({ word, phonetics }) => {
   return (
     <Container>
       <MainWord>{word}</MainWord>
-      {(!pron || !audio) && (
+      {phonetics.length !== 0 && (
         <Phonetics>
           {audio && (
             <Button onClick={playAudio}>
               <FaVolumeUp size={25} />
             </Button>
           )}
-          <Pronounce>{pron}</Pronounce>
+          <Pronounce>{text}</Pronounce>
         </Phonetics>
       )}
     </Container>
